@@ -43,28 +43,43 @@ const Properties = () => {
 
     return (
         <div className="container">
-            <div className='row mt-3 gx-3 gy-2 bg-light p-2 mb-2'>
+            <div className="table-responsive ">
+                <table className="table table-hover table-borderless" >
+                    <thead>
+                        <tr className='text-primary'>
+                            <th scope="col">S.No</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Area</th>
+                            <th scope="col">Uploaded On</th>
+                            <th scope="col" className=' text-center'>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                {properties.length === 0 ? <h4 className=' text-center text-black-50'>Properties doesn't exists</h4> :
-                    properties.map((e) => {
-                        return (<div className="col-sm-12 col-md-6 col-lg-3 " key={e._id}>
-                            <div className="card shadow">
-                                <img src={`http://localhost:5000/public/${e.image}`} className=" img-prop" alt="..." />
-                                <div className="card-body">
-                                    <h5 className="card-title">{e.address}</h5>
-                                    <p>{e.type} ₹{e.price}</p>
-                                    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => setId(e._id)}>
+                        {properties.length === 0 ? <h4 className=' text-center text-black-50'>Properties doesn't exists</h4> :
+                            properties.map((e, i) => {
+                                return (<tr key={e._id}>
+                                    <td>{i + 1}</td>
+                                    <td><img src={`http://localhost:5000/public/${e.image}`} className="shadow img-prop" alt="..." /></td>
+                                    <td>{e.type} ₹{e.price}</td>
+                                    <td> {e.address}</td>
+                                    <td>{e.area}</td>
+                                    <td>{e.date.split("T")[0]}</td>
+                                    <td> <button type="button" className="btn shadow btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={() => setId(e._id)}>
                                         edit
                                     </button>
-                                    <button className='btn btn-danger m-1' onClick={() => deleteprop(e._id)} >Delete</button>
-                                </div>
-                            </div></div>
-                        )
-                    })
-                }
-                <EditProperty data={propId} />
+                                        <button className='btn btn-sm shadow btn-danger m-1' onClick={() => deleteprop(e._id)} >Delete</button>
+                                    </td>
+                                </tr>
+                                )
+                            })
+                        }</tbody>
+                </table>
             </div>
-        </div>
+            <EditProperty data={propId} />
+        </div >
     )
 }
 
